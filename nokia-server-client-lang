@@ -1,0 +1,64 @@
+#!/bin/bash
+# Debug mode: Uncomment the following line to run in verbose/debug mode.
+# set -x
+
+#########################################
+# Step 1: Set Global Default Branch Name
+# This avoids the warning in new repositories.
+#########################################
+# Change 'main' to your preferred name (e.g., trunk, development)
+git config --global init.defaultBranch main
+echo "Global default branch set to 'main'."
+
+#########################################
+# Step 2: Initialize a New Repository
+#########################################
+# Define your repository directory name
+REPO_DIR="sample-repo"
+
+# Create the repository directory and navigate into it
+mkdir -p "$REPO_DIR"
+cd "$REPO_DIR" || { echo "Failed to enter directory $REPO_DIR"; exit 1; }
+
+# Initialize Git repository
+git init
+echo "Initialized empty Git repository in $(pwd)/.git"
+
+#########################################
+# Step 3: Create an Initial Commit
+#########################################
+# Create a sample README file as content
+echo "# Sample Repository for AI Integration" > README.md
+
+# Add and commit the file to Git
+git add README.md
+git commit -m "Initial commit"
+echo "Initial commit created."
+
+#########################################
+# Step 4: Rename the Branch If Required
+#########################################
+# The output might show the branch was created as 'master'
+# Renaming it to 'main' (or your chosen default branch name)
+git branch -m main
+echo "Branch renamed to 'main'."
+
+#########################################
+# Step 5: Connect to Your GitHub Repository
+#########################################
+# Replace the URL below with your actual GitHub repository URL
+REMOTE_URL="https://github.com/your-github-username/sample-repo.git"
+git remote add origin "$REMOTE_URL"
+echo "Remote repository set to $REMOTE_URL."
+
+#########################################
+# Step 6: Push to GitHub
+#########################################
+# Push the current branch to GitHub and set the upstream tracking
+git push -u origin main
+echo "Repository pushed to GitHub on branch 'main'."
+
+#########################################
+# End of Script
+#########################################
+echo "Repository setup complete."
